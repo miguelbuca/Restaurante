@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../src/css/formBs.min.css">
+  <link rel="stylesheet" href="../../../../src/css/tables.css">
+  <link rel="stylesheet" href="../../../css/reactBsTable.css">
+  <link rel="stylesheet" href="../../../../src/components/swiper/swiper.min.css">
+  <link rel="stylesheet" href="../../../../assets/font/fontawesome-free/css/all.css">
+  <link rel="shortcut icon" href="../../../../assets/img/Cloche_food_kitchen_restaurant_icon-512.png"
+    type="image/x-icon">
+  <title>Restaurante | Dashboard</title>
+</head>
+
+<body>
+  <section>
+    <div>
+      <div>
+        <strong style="color: #ccc;">Menu</strong>
+      </div>
+      <div>
+        <ul>
+          <li label="refeicoes" active="true">Refeições</li>
+          <li label="reservas">Reservas</li>
+          <li label="pessoa">Pessoas</li>
+          <li label="cliente">Clientes</li>
+          <li label="usuario">Usuários</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section id="tableConatiner"></section>
+</body>
+<script src="../../../components/crudTableWeb/index.js"></script>
+<script src="../../../../api/index.js"></script>
+<script>
+  let api = new Api()
+
+  let dadosPessoa = {}
+
+  const crudTableWeb = new CrudTable();
+
+  function onDelete(data){
+    
+  }
+  function onSelected(data) {
+
+  }
+  
+
+  let navItem = document.querySelectorAll('body>section:first-child>div>div>ul>li')
+
+  let superData = null
+
+  dadosFormulario = (type,name,e) =>{
+    let form = null
+    navItem.forEach(element => {
+      if(element.getAttribute("active") === "true"){
+       form = element.getAttribute('label')
+      }
+    });
+
+
+console.log(e.onkeypress)
+    if(form === "pessoa"){
+      dadosPessoa[name] = type === 'file'? e[0] : e.target.value
+      superData = dadosPessoa
+    }
+  }
+  
+  adicionarDados = async (table) =>{
+   /* let { data } = await api.send({
+      table: table,
+      method: "add",
+      data: {
+        allPage: true
+      }
+    })
+
+    console.log('add response: ',data)*/
+    console.log(table)
+  }
+
+  const refeicoesForm = (`
+      ola mundo
+  `)
+  const pessoaForm = (`
+<div class="form_container">
+       <div class="form__group">
+         <input type="file" onChange="dadosFormulario('file','foto',this)"/>
+         </div>
+
+         <label for="bidoc" class="form__label">Copia do BI</label>
+       </div>
+       <div class="product-from">
+         <div>
+           <div class='form__group'>
+             <input type='text' class='form__input' onkeypress="dadosFormulario('text','nome',this)" name='nome' id='nome' placeholder='Nome' required />
+             <label class='form__label'>Nome</label>
+           </div>
+           <div class='form__group'>
+             <input type='text' class='form__input'onkeypress="dadosFormulario('text','bi',this)" name='bi' id='bi' placeholder='Nº BI' required />
+             <label class='form__label'>BI</label>
+           </div>
+         </div>
+         <div>
+           <div class='form__group'>
+             <select onChange="dadosFormulario('select','estadocivil',this)" class='form__input'>
+               <optgroup label="Estado civil">
+                 <option value="Solteiro">Solteiro</option>
+                 <option value="Casado">Casado</option>
+                 <option value="Divorciado">Divorciado</option>
+                 <option value="Outro">Outro</option>
+               </optgroup>
+             </select>
+             <label class='form__label'>Estado civil</label>
+           </div>
+           <div class='form__group'>
+             <input onkeypress="dadosFormulario('text','aniversario',this)" type='date' class='form__input' name='date' id='date' required />
+             <label class='form__label'>Aniversário</label>
+           </div>
+         </div>
+         <div>
+           <div class='form__group'>
+             <input type='text' onkeypress="dadosFormulario('text','endereco',this)" class='form__input' name='endereço' id='endereço' placeholder='Endereço' required />
+             <label class='form__label'>Endereço</label>
+           </div>
+           <div class='form__group'>
+             <select onChange="dadosFormulario('select','sexo',this)" class='form__input'>
+               <optgroup label="sexo">
+                 <option value="Masculino">Masculino</option>
+                 <option value="Feminino">Feminino</option>
+               </optgroup>
+             </select>
+             <label class='form__label'>Sexo</label>
+           </div>
+         </div>
+         <div>
+           <div class='form__group'>
+             <input onChange="e=> {
+             this.pessoa['telefone1'] = e.target.value
+             }" type='text' class='form__input' name='telefone1' id='telefone1' placeholder='Telefone 1' required />
+             <label class='form__label'>Telefone 1</label>
+           </div>
+           <div class='form__group'>
+             <input onChange="e=> {
+             this.pessoa['telefone2'] = e.target.value
+             }" type='text' class='form__input' name='telefone2' id='telefone2' placeholder='Telefone 2' required />
+             <label class='form__label'>Telefone 2</label>
+           </div>
+         </div>
+       </div>
+       <div class="add-buttons-conatiner">
+         <button class="btn-add-item" onClick="adicionarDados('pessoa')">Adicionar</button>
+         <button class="btn-clear-item">Limpar</button>
+       </div>
+  </div>
+  `)
+
+  api.send({
+    table: "refeicoes",
+    method: "all",
+    data: {
+      allPage: true
+    }
+  }).then(item=>{
+
+    let res = crudTableWeb.init(
+        item?.data,
+        refeicoesForm,
+        'Refeições',
+        true,
+        action = {
+          onDelete
+        }
+    );
+
+    tableConatiner.innerHTML = res
+
+  })
+
+  clearTarget = () => navItem.forEach(element => element.setAttribute('active', false)) // desativa a isTargt dos links
+
+  navItem.forEach(element =>
+    element.addEventListener('click', async () => {
+      clearTarget()
+      element.setAttribute('active', true)
+
+      let { innerText } = element
+    
+
+      try {
+        let { data } = await api.send({
+          table: element.getAttribute('label').toLowerCase(),
+          method: "all",
+          data: {
+          allPage: true
+          }
+        })
+        //tableConatiner.innerHTML
+        let res = crudTableWeb.init(
+          data,
+          innerText == 'Refeições' ? (
+            refeicoesForm
+          ) :innerText == 'Reservas'?(
+            `Form Reservas`
+          ) :innerText == 'Pessoas'?(
+            pessoaForm
+          ):innerText == 'Clientes'?(
+            `Form Clientes`
+          ):innerText == 'Usuários'?(
+            `Form Usuários`
+          ):(
+            ``
+          ),
+          innerText,
+          true,
+          action = {
+            onDelete
+          }
+      );
+
+      tableConatiner.innerHTML = ``
+
+      tableConatiner.innerHTML = res
+
+      } catch (error) {
+        tableConatiner.innerHTML = `Houve um erro ao efectuar a consulta <p style="color: red">${error.message}</>`
+      }
+      
+    })
+  ) // faz a activação dos eventos onclick nos linck 
+</script>
+</html>

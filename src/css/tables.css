@@ -1,0 +1,99 @@
+@import 'scroll.css';
+@import 'formBs.min.css';
+
+:root {
+  --color-primary: #c4112f;
+  --color-primary-light: #fef1e1;
+  --color-primary-dark: #251a06;
+
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+
+  --color-grey-dark-1: #333;
+  --color-grey-dark-2: #777;
+  --color-grey-dark-3: #999;
+
+
+  --shadow-dark: 0 2rem 6rem rgba(255, 255, 255, .3);
+  --shadow-light: 0 1rem 2.5rem rgba(0, 0, 0, .06);
+
+  --line: 1px solid var(--color-grey-light-2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+*::after,
+*::before {
+  position: relative;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+body {
+  background-position: top;
+  font-family: Segoe WPC, Segoe UI, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  padding: 2.5rem;
+}
+
+body>section{
+  flex-grow: 1;
+}
+body>section:first-child>div{
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: var(--shadow-light);
+  padding: 1rem;
+}
+body>section:first-child>div>div>ul{
+  list-style: none;
+  margin-top: 1rem;
+}
+body>section:first-child>div>div>ul>li{
+  padding: .5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+body>section:first-child>div>div>ul>li[active="true"]{
+  color: var(--color-primary);
+  background-color: #c4112f1e;
+}
+body>section:nth-child(2){
+  padding: 0 2.5rem;
+}
+.form_container{
+  display: flex;
+  flex-direction: column;
+}
+.product-from{
+  display: flex;
+  flex-direction: column;
+}
+.product-from>div{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.product-from>div>div{
+  flex: 1;
+}
+.product-from>div>div:not(:last-child){
+  margin-right: 2rem;
+}

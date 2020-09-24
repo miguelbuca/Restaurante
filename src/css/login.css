@@ -1,0 +1,77 @@
+:root {
+  --color-primary: #c4112f;
+  --color-primary-light: #fef1e1;
+  --color-primary-dark: #251a06;
+
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+
+  --color-grey-dark-1: #333;
+  --color-grey-dark-2: #777;
+  --color-grey-dark-3: #999;
+
+
+  --shadow-dark: 0 2rem 6rem rgba(255, 255, 255, .3);
+  --shadow-light: 0 1rem 2.5rem rgba(0, 0, 0, .06);
+
+  --line: 1px solid var(--color-grey-light-2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+*::after,
+*::before {
+  position: relative;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+body {
+  background-position: top;
+  font-family: Segoe WPC, Segoe UI, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #000;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right bottom, var(--color-primary), #ba265d);
+}
+
+body>* {
+  max-width: 100%;
+}
+.logo-box {
+  display: flex;
+  align-items: center;
+  padding: 0 2.5rem;
+  justify-content: center;
+}
+
+.logo-box img {
+  width: 3rem;
+  margin-right: 1rem;
+}
+form{
+    background-color: #fff;
+    padding: 2.5rem;
+}
+.btn-send {
+  padding: .5rem 0;
+  border: solid 1px var(--color-primary);
+  border-radius: 4px;
+  background-color: transparent;
+  outline: none;
+  color: var(--color-primary);
+}

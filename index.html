@@ -4,70 +4,222 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/css/main.css">
+    <link rel="stylesheet" href="./src/css/formBs.min.css">
+    <link rel="stylesheet" href="./src/components/swiper/swiper.min.css">
     <link rel="stylesheet" href="./assets/font/fontawesome-free/css/all.css">
+    <link rel="shortcut icon" href="./assets/img/Cloche_food_kitchen_restaurant_icon-512.png" type="image/x-icon">
     <title>Restaurante</title>
 </head>
 <body>
-   <header>
-        <div>
-            <h3>Restaurante</h3>
-        </div>
-        <div>
-            <ul>
-                <li active="true"><a href="#">Home</a></li>
-                <li><a href="#">Cardápio</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Localização</a></li>
-                <li><a href="#">Contato</a></li>
-            </ul>
-        </div>
-        <div>
-            <span>
-                <i class="fas fa-search"></i>
-            </span>
-            <span>
-                <i class="fas fa-align-justify"></i>
-            </span>
-        </div>
-   </header>
-   <section>
-       <div>
-           <div>
-                <div>
-                    <h4>Você está com fome?</h4>
-                    <h1>Não espere!</h1>
-                    <label for="#">Deixe comece a ordenar comida agora</label>
-                </div>
-                <div>
-                    <a href="#" class="btn-check">Verifique menu</a href="#">
-                </div>
-           </div>
-           <divc class="dott">
-               <span active="true"></span>
-               <span></span>
-               <span></span>
-               <span></span>
-           </div>
+   <aside>
+       <div class="logo-box">
+           <span>
+               <img src="./assets/img/Cloche_food_kitchen_restaurant_icon-512.png" alt="">
+           </span>
+           <strong>Restaurante</strong>
        </div>
        <div>
-           <div>
+           <!-- Swiper -->
+           <div class="swiper-container">
+               <div class="swiper-wrapper">
+                   <div class="swiper-slide" product="Hamburger Onion Ring">
+                       <img src="./assets/img/FAVPNG_whopper-chicken-sandwich-crispy-fried-chicken-hamburger-onion-ring_fpmMgHst.png" alt="">
+                   </div>
+                   <div class="swiper-slide" product="Hamburger Onion Ring">
+                       <img src="./assets/img/FAVPNG_whopper-chicken-sandwich-crispy-fried-chicken-hamburger-onion-ring_fpmMgHst.png" alt="">
+                   </div>
+               </div>
+               <!-- Add Pagination -->
+               <div class="swiper-pagination"></div>
+           </div>
+       </div>
+   </aside>
+   <main>
+       <header>
+           <nav>
+               <ul>
+                    <li><a isTarget="false" href="#">Home</a></li>
+                    <li><a isTarget="false" href="#Cardapio"><i style="margin-right: 1rem;" class="fas fa-cookie"></i>Cardápio</a></li>
+                    <li><a isTarget="false" href="#Localizacao">Localização</a></li>
+                    <li><a isTarget="false" href="#Sobre">Sobre</a></li>
+               </ul>
                <div>
-                   <img src="./assets/img/IMGBIN_vegetarian-cuisine-catering-restaurant-buffet-food-png_FPm63quL.png" alt="">
+                   <i class="fas fa-search"></i>
+                   <i class="fas fa-bars"></i>
+               </div>
+           </nav>
+       </header>
+       <section>
+           <div id="#">
+               <h4>Você está com fome?</h4>
+               <h1>Não espere!</h1>
+               <label>Comece a ordenar a comida agora</label>
+               <button>
+                   Verifique menú<i class="fas fa-arrow-right"></i>
+               </button>
+           </div>
+           <div class="cardapio" id="Cardapio">
+                <div>
+                    <button>Todos</button>
+                    <button>Matabicho</button>
+                    <button>Almoço</button>
+                    <button>Jantar</button>
+                </div>
+                <div>
+                    <div class="food-card">
+                        <div>
+                            <img src="./assets/img/FAVPNG_whopper-chicken-sandwich-crispy-fried-chicken-hamburger-onion-ring_fpmMgHst.png" alt="">
+                        </div>
+                        <div>
+                            <div>
+                                <h4>Humburger</h4>
+                                <label>900 Akz</label>
+                            </div>
+                            <div>
+                                <span>
+                                    <i class="fas fa-eye"></i>
+                                </span>
+                                <span>18 views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="food-card">
+                        <div>
+                            <img src="./assets/img/FAVPNG_chicken-nugget-kfc-kentucky-fried-chicken-popcorn-chicken-fast-food_dt20NYC3.png" alt="">
+                        </div>
+                        <div>
+                            <div>
+                                <h4>chicken nugget</h4>
+                                <label>4.000 Akz</label>
+                            </div>
+                            <div>
+                                <span>
+                                    <i class="fas fa-eye"></i>
+                                </span>
+                                <span>18 views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="food-card">
+                        <div>
+                            <img src="./assets/img/IMGBIN_vegetarian-cuisine-catering-restaurant-buffet-food-png_FPm63quL.png" alt="">
+                        </div>
+                        <div>
+                            <div>
+                                <h4>vegetarian cuisine</h4>
+                                <label>2.500 Akz</label>
+                            </div>
+                            <div>
+                                <span>
+                                    <i class="fas fa-eye"></i>
+                                </span>
+                                <span>8 views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+           <div class="localizacao" id="Localizacao">
+               <div>
+                   <div>
+                       <strong>Horário</strong>
+                   </div>
+                   <div class="clock-area">
+                       <div>
+                            <i class="fas fa-clock"></i>
+                       </div>
+                       <div>
+                            <span>
+                                <strong>Segunda à Sexta</strong>
+                                <small>7:30 - 22:00 horas</small>
+                            </span>
+                            <span>
+                                <strong>Sábado</strong>
+                                <small>7:30 - 22:00 horas</small>
+                            </span>
+                            <span>
+                                <strong>Domingo</strong>
+                                <small>Fechado</small>
+                            </span>
+                       </div>
+                   </div>
+               </div>
+               <div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15763.882113774953!2d13.2170528!3d-8.9748589!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xc1b45c57d9661cff!2sUrbaniza%C3%A7%C3%A3o%20Boa%20Vida!5e0!3m2!1spt-PT!2sao!4v1600244411495!5m2!1spt-PT!2sao" height="450" style="width: 100%;" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                </div>
            </div>
+       </section>
+       <footer id="Sobre">
            <div>
-                <span>
-                    <i class="fab fa-linkedin-in"></i>
-                </span>
-                <span>
-                    <i class="fab fa-facebook"></i>
-                </span>
-                <span>
-                    <i class="fab fa-twitter"></i>
-                </span>
+            <div>
+                <div>
+                    <strong>Restaurante</strong>
+                </div>
+                <div class="about">
+                    Habilite esta opção para nos permitir entre contacto com você apartir da sua conta email o contacto pessoal, para te
+                    manter informado das nossas actualizações e gerar maior interação com a nossa página ou aplicação
+                </div>
+            </div>
+            <div class="input-area">
+                <div>
+                    <strong>Entrar em contacto</strong>
+                </div>
+                <form action="post">
+                    <div class='form__group'>
+                        <textarea class='form__input' name='mensagem' id='mensagem' placeholder='Mensagem' required></textarea>
+                        <label class='form__label'>Mensagem</label>
+                    </div>
+                    <div class='form__group'>
+                        <input type='email' class='form__input' name='email' id='email' placeholder='Email' required />
+                        <label class='form__label'>Email</label>
+                    </div>
+                    <div class='form__group'>
+                        <button class="btn-send">Enviar</button>
+                    </div>
+                </form>
+            </div>
            </div>
-       </div>
-   </section>
-   <section>ola</section>
+           <div>
+               <small>Restaurante &copy; todos os seus direitos reservados</small>
+           </div>
+       </footer>
+   </main>
+   <script src="./src/components/swiper/swiper.min.js"></script>
+   <script>
+       var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            paginationClickable: true,
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: false
+       }); // inicialização do componente swiper
+
+       let navItem = document.querySelectorAll('header>nav>ul>li>a')
+
+       
+       clearTarget = () =>navItem.forEach(element=>element.setAttribute('isTarget',false)) // desativa a isTargt dos links
+       
+       navItem.forEach(e=>
+            e.addEventListener('click',()=>{
+                clearTarget()
+                e.setAttribute('isTarget',true)
+            })
+       ) // faz a activação dos eventos onclick nos linck 
+
+       
+       clearTarget(); 
+
+        window.location.hash === '#Cardapio' ? (
+            navItem[1]?.setAttribute('isTarget',true)) :
+        window.location.hash === '#Localizacao' ? (
+            navItem[2]?.setAttribute('isTarget',true)) :
+        window.location.hash === '#Sobre' ? (
+            navItem[3]?.setAttribute('isTarget',true)) : 
+        (navItem[0]?.setAttribute('isTarget',true)) //Faz a activação do currente target logo de início
+
+    </script>
 </body>
 </html>

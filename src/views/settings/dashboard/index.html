@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../src/css/formBs.min.css">
+  <link rel="stylesheet" href="../../../../src/css/dashboard.css">
+  <link rel="stylesheet" href="../../../../src/components/swiper/swiper.min.css">
+  <link rel="stylesheet" href="../../../../assets/font/fontawesome-free/css/all.css">
+  <link rel="shortcut icon" href="../../../../assets/img/Cloche_food_kitchen_restaurant_icon-512.png"
+    type="image/x-icon">
+  <title>Restaurante | Dashboard</title>
+</head>
+
+<body>
+    <header>
+      <div class="user-info-area">
+        <div>
+          <img src="../../../../assets/img/avatar.png" alt="">
+        </div>
+        <div>
+          <strong>username</strong>
+          <small>administador</small>
+        </div>
+      </div>
+      <div>
+        <button active="true" src="./chart.html">Gráficos</button>
+        <button src="./tables.html">Tabelas</button>
+      </div>
+      <div>
+        <span>
+          <i class="fas fa-bell"></i>
+        </span>
+      </div>
+    </header>
+    <main>
+      <iframe src="./chart.html" frameborder="0"></iframe>
+    </main>
+</body>
+<script>
+  let navItem = document.querySelectorAll('header>div:nth-child(2)>button')
+  let iframe = document.querySelector('iframe')
+
+       
+       clearTarget = () =>navItem.forEach(element=>element.setAttribute('active',false)) // desativa a isTargt dos links
+       
+       navItem.forEach(e=>
+            e.addEventListener('click',()=>{
+                clearTarget()
+                e.setAttribute('active',true)
+                //iframe.src = e.getAttribute('src')
+                console.log([iframe.contentWindow.history])
+                iframe.contentWindow.location.replace(e.getAttribute('src'))
+            })
+       ) // faz a activação dos eventos onclick nos linck 
+</script>
+</html>
