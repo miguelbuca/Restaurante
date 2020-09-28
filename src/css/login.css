@@ -46,7 +46,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to right bottom, var(--color-primary), #ba265d);
+  background-image: url(../../assets/img/FAVPNG_whopper-chicken-sandwich-crispy-fried-chicken-hamburger-onion-ring_fpmMgHst.png),
+  linear-gradient(to right bottom, var(--color-primary), #ba265d);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 body>* {
@@ -64,7 +68,7 @@ body>* {
   margin-right: 1rem;
 }
 form{
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, .8);
     padding: 2.5rem;
 }
 .btn-send {

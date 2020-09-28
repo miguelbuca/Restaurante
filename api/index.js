@@ -21,6 +21,8 @@ class Api{
     }})=>{
       let { table, method, data }= data_;
       
+      
+
        let formData = new FormData();
        if(data)
        for (let key in data) {

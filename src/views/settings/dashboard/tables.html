@@ -22,11 +22,15 @@
       </div>
       <div>
         <ul>
-          <li label="refeicoes" active="true">Refeições</li>
-          <li label="reservas">Reservas</li>
+          <li label="refeicao" active="true">Refeições</li>
+          <li label="reserva">Reservas</li>
           <li label="pessoa">Pessoas</li>
           <li label="cliente">Clientes</li>
           <li label="usuario">Usuários</li>
+          <small style="color: #ccc;">Auxiliares</small>
+          <li label="listareserva">Lista de Reserva</li>
+          <li label="notificacaoReseva">Notificações</li>
+          <li label="visualizacao">Visualização</li>
         </ul>
       </div>
     </div>
@@ -38,7 +42,43 @@
 <script>
   let api = new Api()
 
-  let dadosPessoa = {}
+  function getPessoa(containerId) {
+    api.send({
+      table: "pessoa",
+      method: "all",
+      data: {
+        allPage: true
+      }
+    }).then(({ data })=>{
+      let op = null
+      data.map(({ id, nome }) => {
+        if(op !== null)
+          op += `<option value="${id}">${nome}</option>`
+        else
+          op = `<option value="${id}">${nome}</option>`
+      })
+      containerId.innerHTML = `<optgroup label="pessoa">${op}</optgroup>`
+    })
+  }
+
+  function getUsuario(containerId) {
+      api.send({
+        table: "usuario",
+        method: "all",
+        data: {
+          allPage: true
+        }
+      }).then(({ data }) => {
+        let op = null
+        data.map(({ id, nome }) => {
+          if (op !== null)
+            op += `<option value="${id}">${nome}</option>`
+          else
+            op = `<option value="${id}">${nome}</option>`
+        })
+        containerId.innerHTML = `<optgroup label="usuário">${op}</optgroup>`
+      })
+    }
 
   const crudTableWeb = new CrudTable();
 
@@ -51,45 +91,12 @@
   
 
   let navItem = document.querySelectorAll('body>section:first-child>div>div>ul>li')
-
-  let superData = null
-
-  dadosFormulario = (type,name,e) =>{
-    let form = null
-    navItem.forEach(element => {
-      if(element.getAttribute("active") === "true"){
-       form = element.getAttribute('label')
-      }
-    });
-
-
-console.log(e.onkeypress)
-    if(form === "pessoa"){
-      dadosPessoa[name] = type === 'file'? e[0] : e.target.value
-      superData = dadosPessoa
-    }
-  }
   
-  adicionarDados = async (table) =>{
-   /* let { data } = await api.send({
-      table: table,
-      method: "add",
-      data: {
-        allPage: true
-      }
-    })
-
-    console.log('add response: ',data)*/
-    console.log(table)
-  }
 
   const refeicoesForm = (`
-      ola mundo
-  `)
-  const pessoaForm = (`
 <div class="form_container">
        <div class="form__group">
-         <input type="file" onChange="dadosFormulario('file','foto',this)"/>
+         <input type="file" id="foto"/>
          </div>
 
          <label for="bidoc" class="form__label">Copia do BI</label>
@@ -97,17 +104,71 @@ console.log(e.onkeypress)
        <div class="product-from">
          <div>
            <div class='form__group'>
-             <input type='text' class='form__input' onkeypress="dadosFormulario('text','nome',this)" name='nome' id='nome' placeholder='Nome' required />
+             <input type='text' class='form__input' name='nome' id='nome' placeholder='Nome' required />
              <label class='form__label'>Nome</label>
            </div>
            <div class='form__group'>
-             <input type='text' class='form__input'onkeypress="dadosFormulario('text','bi',this)" name='bi' id='bi' placeholder='Nº BI' required />
+             <input type='number' class='form__input' name='preco' id='preco' placeholder='Preço' required />
+             <label class='form__label'>Preço</label>
+           </div>
+         </div>
+         <div>
+           <div class='form__group'>
+             <select id="categoria" class='form__input'>
+               <optgroup label="categoria">
+                 <option value="matabicho">Matabicho</option>
+                 <option value="almoço">Almoço</option>
+                 <option value="jantar">jantar</option>
+                 <option value="lanche">lanche</option>
+               </optgroup>
+             </select>
+             <label class='form__label'>Categoria</label>
+           </div>
+           <div class='form__group'></div>
+         </div>
+         <div>
+           <div class='form__group'>
+             <textarea class='form__input' name='descricao' id='descricao' placeholder='Descrição' required></textarea>
+             <label class='form__label'>Descrição</label>
+           </div>
+           <div class='form__group'></div>
+         </div>
+       </div>
+       <div class="add-buttons-conatiner">
+         <button class="btn-add-item" onClick="adicionarDados('refeicao',{
+            nome: nome.value,
+            categoria: categoria.value,
+            preco: preco.value,
+            descricao: descricao.value,
+            foto: foto.files[0]
+         })">Adicionar</button>
+         <button class="btn-clear-item">Limpar</button>
+       </div>
+  </div>
+  `)
+
+  const pessoaForm = (`
+<div class="form_container">
+       <div class="form__group">
+         <input type="file" id="foto"/>
+         </div>
+
+         <label for="bidoc" class="form__label">Copia do BI</label>
+       </div>
+       <div class="product-from">
+         <div>
+           <div class='form__group'>
+             <input type='text' class='form__input' name='nomePessoa' id='nomePessoa' placeholder='Nome' required />
+             <label class='form__label'>Nome</label>
+           </div>
+           <div class='form__group'>
+             <input type='text' class='form__input' name='bi' id='bi' placeholder='Nº BI' required />
              <label class='form__label'>BI</label>
            </div>
          </div>
          <div>
            <div class='form__group'>
-             <select onChange="dadosFormulario('select','estadocivil',this)" class='form__input'>
+             <select id="estadocivil" class='form__input'>
                <optgroup label="Estado civil">
                  <option value="Solteiro">Solteiro</option>
                  <option value="Casado">Casado</option>
@@ -118,17 +179,17 @@ console.log(e.onkeypress)
              <label class='form__label'>Estado civil</label>
            </div>
            <div class='form__group'>
-             <input onkeypress="dadosFormulario('text','aniversario',this)" type='date' class='form__input' name='date' id='date' required />
+             <input type='date' class='form__input' name='date' id='aniversario' required />
              <label class='form__label'>Aniversário</label>
            </div>
          </div>
          <div>
            <div class='form__group'>
-             <input type='text' onkeypress="dadosFormulario('text','endereco',this)" class='form__input' name='endereço' id='endereço' placeholder='Endereço' required />
+             <input type='text' class='form__input' name='endereço' id='endereco' placeholder='Endereço' required />
              <label class='form__label'>Endereço</label>
            </div>
            <div class='form__group'>
-             <select onChange="dadosFormulario('select','sexo',this)" class='form__input'>
+             <select id="sexo" class='form__input'>
                <optgroup label="sexo">
                  <option value="Masculino">Masculino</option>
                  <option value="Feminino">Feminino</option>
@@ -139,28 +200,175 @@ console.log(e.onkeypress)
          </div>
          <div>
            <div class='form__group'>
-             <input onChange="e=> {
-             this.pessoa['telefone1'] = e.target.value
-             }" type='text' class='form__input' name='telefone1' id='telefone1' placeholder='Telefone 1' required />
+             <input type='text' class='form__input' name='telefone1' id='telefone1' placeholder='Telefone 1' required />
              <label class='form__label'>Telefone 1</label>
            </div>
            <div class='form__group'>
-             <input onChange="e=> {
-             this.pessoa['telefone2'] = e.target.value
-             }" type='text' class='form__input' name='telefone2' id='telefone2' placeholder='Telefone 2' required />
-             <label class='form__label'>Telefone 2</label>
+             <input type='text' class='form__input' name='telefone2' id='telefone2' placeholder='Telefone 2' required />
+             <label class='form__label'>Telefone 2</el>
            </div>
          </div>
        </div>
        <div class="add-buttons-conatiner">
-         <button class="btn-add-item" onClick="adicionarDados('pessoa')">Adicionar</button>
+         <button class="btn-add-item" onClick="adicionarDados('pessoa',{
+            nome: nomePessoa.value,
+            bi: bi.value,
+            estadocivil: estadocivil.value,
+            foto: foto.files[0],
+            aniversario: aniversario.value,
+            endereco: endereco.value,
+            sexo: sexo.value,
+            telefone1: telefone1.value,
+            telefone2: telefone2.value
+         })">Adicionar</button>
          <button class="btn-clear-item">Limpar</button>
        </div>
   </div>
   `)
 
+  const usuarioForm = (`
+<div class="form_container">
+       <div class="product-from">
+         <div>
+           <div class='form__group'>
+             <input type='text' class='form__input' name='nomeUsuario' id='nomeUsuario' placeholder='Nome' required />
+             <label class='form__label'>Nome</label>
+           </div>
+           <div class='form__group'>
+             <input type='password' class='form__input' name='senha' id='senha' placeholder='senha' required />
+             <label class='form__label'>Senha</label>
+           </div>
+         </div>
+         <div>
+           <div class='form__group'>
+             <input type='password' class='form__input' name='confirmarsenha' id='confirmarsenha' placeholder='Confirmar senha' required />
+             <label class='form__label'>Confirmar senha</label>
+           </div>
+           <div class='form__group'>
+             <select id="acesso" class='form__input'>
+               <optgroup label="acesso">
+                  <option value="cliente">Cliente</option>
+                  <option value="gestor">Gestor</option>
+                  <option value="administrador">Administrador</option>
+               </optgroup>
+             </select>
+             <label class='form__label'>Acesso</label>
+           </div>
+         </div>
+         <div>
+            <div class='form__group'>
+             <input type='email' class='form__input' name='email' id='emailRecuperacao' placeholder='Email de recuperação' required />
+             <label class='form__label'>Email de recuperaçao</label>
+            </div>
+            <div class='form__group'>
+             <select id="pessoaId" onfocus="getPessoa(pessoaId)" class='form__input'>
+             </select>
+            <label class='form__label'>Pessoa</label>
+            </div>
+         </div>
+       </div>
+       <div class="add-buttons-conatiner">
+         <button class="btn-add-item" onClick="adicionarDados('usuario',{
+            nome: nomeUsuario.value,
+            senha: senha.value,
+            emailRecuperacao: emailRecuperacao.value,
+            pessoaId: pessoaId.value,
+            acesso: acesso.value
+         })">Adicionar</button>
+         <button class="btn-clear-item">Limpar</button>
+       </div>
+  </div>
+  `)
+
+  const clienteForm = (`
+<div class="form_container">
+       <div class="product-from">
+         <div>
+          <div class='form__group'>
+             <select id="pessoaId" onfocus="getPessoa(pessoaId)" class='form__input'>
+             </select>
+            <label class='form__label'>Pessoa</label>
+          </div>
+           <div class='form__group'>
+             <select id="categoria" class='form__input'>
+               <optgroup label="categoria">
+                  <option value="normal">Normal</option>
+                  <option value="vip">Vip</option>
+               </optgroup>
+             </select>
+             <label class='form__label'>Categoria</label>
+           </div>
+         </div>
+       </div>
+       <div class="add-buttons-conatiner">
+         <button class="btn-add-item" onClick="adicionarDados('cliente',{
+            pessoaId: pessoaId.value,
+            categoria: categoria.value
+         })">Adicionar</button>
+         <button class="btn-clear-item">Limpar</button>
+       </div>
+  </div>
+  `)
+
+  const reservaForm = (`
+<div class="form_container">
+       <div class="product-from">
+         <div>
+          <div class='form__group'>
+             <select id="usuarioId" onfocus="getUsuario(usuarioId)" class='form__input'>
+             </select>
+            <label class='form__label'>Usuário</label>
+          </div>
+           <div class='form__group'>
+             <select id="estado" class='form__input'>
+               <optgroup label="categoria">
+                  <option value="0">Pendente</option>
+                  <option value="1">Sucedido</option>
+               </optgroup>
+             </select>
+             <label class='form__label'>Estado</label>
+           </div>
+         </div>
+         <div>
+          <div class='form__group'>
+             <input type="date" id="dataReserva" class='form__input'>
+            <label class='form__label'>Data</label>
+          </div>
+          <div></div>
+         </div>
+       </div>
+       <div class="add-buttons-conatiner">
+         <button class="btn-add-item" onClick="adicionarDados('reserva',{
+            dataReserva: dataReserva.value,
+            usuarioId: usuarioId.value,
+            estado: estado.value
+         })">Adicionar</button>
+         <button class="btn-clear-item">Limpar</button>
+       </div>
+  </div>
+  `)
+
+const autoForm = (`
+<div class="form_container">
+  <div class="product-from">
+     <span>
+        <i class="fas fa-robot" style="margin-right: 1rem; color: #c4112f"></i>Formulário de cadastro automático
+     </span>
+  </div>
+</div>
+`)
+
+  adicionarDados = async (table,values) =>{
+    let data = await api.send({
+      table: table,
+      method: "add",
+      data: values
+    })
+    console.log(data,values)
+  }
+
   api.send({
-    table: "refeicoes",
+    table: "refeicao",
     method: "all",
     data: {
       allPage: true
@@ -205,15 +413,15 @@ console.log(e.onkeypress)
           innerText == 'Refeições' ? (
             refeicoesForm
           ) :innerText == 'Reservas'?(
-            `Form Reservas`
+            reservaForm
           ) :innerText == 'Pessoas'?(
             pessoaForm
           ):innerText == 'Clientes'?(
-            `Form Clientes`
+            clienteForm
           ):innerText == 'Usuários'?(
-            `Form Usuários`
+            usuarioForm
           ):(
-            ``
+            autoForm
           ),
           innerText,
           true,

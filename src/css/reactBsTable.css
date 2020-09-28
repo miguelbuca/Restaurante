@@ -1,8 +1,11 @@
-.CrudTable {
+#tableConatiner {
     padding: 20px;
     box-shadow: var(--shadow-light);
     border-radius: 16px;
     background-color: #fff;
+    height: 100%;
+    width: 65vw;
+    max-width: 65vw;
 }
 
 .CrudTable__formContent {
@@ -213,5 +216,5 @@ button {
     margin-top: .7rem;
 }
 #tableConatiner{
-  width: 60vw;
+  margin-left: 4rem;
 }

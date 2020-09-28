@@ -51,8 +51,8 @@ body {
   padding: 2.5rem;
 }
 
-body>section{
-  flex-grow: 1;
+body>section:first-child{
+  min-width: 280px;
 }
 body>section:first-child>div{
   background-color: #fff;

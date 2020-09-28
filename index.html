@@ -33,6 +33,23 @@
                <div class="swiper-pagination"></div>
            </div>
        </div>
+       <div class="navigation">
+           <div class="navigation-img-container">
+               <img src="./assets/img/avatar.png" alt="user-img">
+           </div>
+           <div>
+               <ul>
+                   <li><a href="#">Minha conta</a></li>
+                   <li><a href="#">Histórico</a></li>
+                   <li><a href="src/views/settings/login/">Área reservada</a></li>
+               </ul>
+               <div class="navigation-list-footer">
+                   <button class="sign-out-button">
+                       Terminar sessão<i class="fas fa-sign-out-alt"></i>
+                   </button>
+               </div>
+           </div>
+       </div>
    </aside>
    <main>
        <header>
@@ -44,8 +61,8 @@
                     <li><a isTarget="false" href="#Sobre">Sobre</a></li>
                </ul>
                <div>
-                   <i class="fas fa-search"></i>
-                   <i class="fas fa-bars"></i>
+                   <i class="fas fa-shopping-cart"></i>
+                   <i class="fas fa-bars" id="side_nav"></i>
                </div>
            </nav>
        </header>
@@ -54,8 +71,8 @@
                <h4>Você está com fome?</h4>
                <h1>Não espere!</h1>
                <label>Comece a ordenar a comida agora</label>
-               <button>
-                   Verifique menú<i class="fas fa-arrow-right"></i>
+               <button id="toggle" class="sign-out-button">
+                   Cadastra-te<i class="fas fa-arrow-right"></i>
                </button>
            </div>
            <div class="cardapio" id="Cardapio">
@@ -65,58 +82,7 @@
                     <button>Almoço</button>
                     <button>Jantar</button>
                 </div>
-                <div>
-                    <div class="food-card">
-                        <div>
-                            <img src="./assets/img/FAVPNG_whopper-chicken-sandwich-crispy-fried-chicken-hamburger-onion-ring_fpmMgHst.png" alt="">
-                        </div>
-                        <div>
-                            <div>
-                                <h4>Humburger</h4>
-                                <label>900 Akz</label>
-                            </div>
-                            <div>
-                                <span>
-                                    <i class="fas fa-eye"></i>
-                                </span>
-                                <span>18 views</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="food-card">
-                        <div>
-                            <img src="./assets/img/FAVPNG_chicken-nugget-kfc-kentucky-fried-chicken-popcorn-chicken-fast-food_dt20NYC3.png" alt="">
-                        </div>
-                        <div>
-                            <div>
-                                <h4>chicken nugget</h4>
-                                <label>4.000 Akz</label>
-                            </div>
-                            <div>
-                                <span>
-                                    <i class="fas fa-eye"></i>
-                                </span>
-                                <span>18 views</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="food-card">
-                        <div>
-                            <img src="./assets/img/IMGBIN_vegetarian-cuisine-catering-restaurant-buffet-food-png_FPm63quL.png" alt="">
-                        </div>
-                        <div>
-                            <div>
-                                <h4>vegetarian cuisine</h4>
-                                <label>2.500 Akz</label>
-                            </div>
-                            <div>
-                                <span>
-                                    <i class="fas fa-eye"></i>
-                                </span>
-                                <span>8 views</span>
-                            </div>
-                        </div>
-                    </div>
+                <div id="CardapioList">
                 </div>
            </div>
            <div class="localizacao" id="Localizacao">
@@ -183,9 +149,265 @@
                <small>Restaurante &copy; todos os seus direitos reservados</small>
            </div>
        </footer>
+       <div class="popup"></div>
+       <div class="popup_content">
+           novo test
+       </div>
    </main>
    <script src="./src/components/swiper/swiper.min.js"></script>
+   <script src="./api/index.js"></script>
    <script>
+
+        let api = new Api();
+
+
+        
+
+        api.send({
+            table: "refeicao",
+            method: "all",
+            data: {
+            allPage: true
+            }
+        }).then(({ data }) => {
+            let result = ``
+            data?.map(produto=>{
+                let { nome, preco , foto, descricao } = produto
+                result += `
+                        <div class="food-card" onclick="mostrarRefeicao('${nome}','${preco}','${foto}','${descricao}')">
+                        <div>
+                            <img src="${api.filePath()}${foto}" alt="${foto}">
+                        </div>
+                        <div>
+                            <div>
+                                <h4>${nome}</h4>
+                                <label>${preco} Akz</label>
+                            </div>
+                            <div>
+                                <span>
+                                    <i class="fas fa-eye"></i>
+                                </span>
+                                <span>18 views</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+            })
+
+            CardapioList.innerHTML = result
+        })
+
+    var POPUP = document.querySelector('.popup');
+    var POPUP_CONTENT = document.querySelector('.popup_content');
+
+    let isOpen = false
+    toggle.addEventListener('click',()=>{
+        toggleModal(`
+                <div class="modal_container">
+                    <div class="modal_container--header"><strong style="text-transform: uppercase;">Cadastra-te</strong><button onclick="closeAll()"
+                            class="popup_close">&times;</button>
+                    </div>
+                    <div style="display: flex; flex-direction: row">
+                        <div class="form_container">
+                           <div class="upload-image-container">
+            
+                            <img src="./assets/img/avatar.png" id="img__profile" onclick="foto.click()"> 
+                            <input id="foto" id="foto" img="imgPessoa" type="file" name="foto" accept="image" hidden>
+                        </div>
+                        </div>
+                        <div>
+                        <div class="product-from">
+                            <div>
+                                <div class='form__group'>
+                                    <input type='text' class='form__input' name='nomePessoa' id='nomePessoa'
+                                        placeholder='Nome' required />
+                                    <label class='form__label'>Nome</label>
+                                </div>
+                                <div class='form__group'>
+                                    <input type='text' class='form__input' name='bi' id='bi' placeholder='Nº BI'
+                                        required />
+                                    <label class='form__label'>BI</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class='form__group'>
+                                    <select id="estadocivil" class='form__input'>
+                                        <optgroup label="Estado civil">
+                                            <option value="Solteiro">Solteiro</option>
+                                            <option value="Casado">Casado</option>
+                                            <option value="Divorciado">Divorciado</option>
+                                            <option value="Outro">Outro</option>
+                                        </optgroup>
+                                    </select>
+                                    <label class='form__label'>Estado civil</label>
+                                </div>
+                                <div class='form__group'>
+                                    <input type='date' class='form__input' name='date' id='aniversario' required />
+                                    <label class='form__label'>Aniversário</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class='form__group'>
+                                    <input type='text' class='form__input' name='endereço' id='endereco'
+                                        placeholder='Endereço' required />
+                                    <label class='form__label'>Endereço</label>
+                                </div>
+                                <div class='form__group'>
+                                    <select id="sexo" class='form__input'>
+                                        <optgroup label="sexo">
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Feminino">Feminino</option>
+                                        </optgroup>
+                                    </select>
+                                    <label class='form__label'>Sexo</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class='form__group'>
+                                    <input type='text' class='form__input' name='telefone1' id='telefone1'
+                                        placeholder='Telefone 1' required />
+                                    <label class='form__label'>Telefone 1</label>
+                                </div>
+                                <div class='form__group'>
+                                    <input type='text' class='form__input' name='telefone2' id='telefone2'
+                                        placeholder='Telefone 2' required />
+                                    <label class='form__label'>Telefone 2</el>
+                                </div>
+                            </div>
+                             <div>
+                                 <div class='form__group'>
+                                     <input type='text' class='form__input' name='nomeUsuario' id='nomeUsuario'
+                                         placeholder='Nome de usuário' required />
+                                     <label class='form__label'>Nome</label>
+                                 </div>
+                                 <div class='form__group'>
+                                     <input type='password' class='form__input' name='senha' id='senha'
+                                         placeholder='senha' required />
+                                     <label class='form__label'>Senha</label>
+                                 </div>
+                             </div>
+                              <div>
+                                  <div class='form__group'>
+                                      <input type='email' class='form__input' name='email' id='emailRecuperacao'
+                                          placeholder='Email de recuperação' required />
+                                      <label class='form__label'>Email de recuperaçao</label>
+                                  </div>
+                                  <div class='form__group'>
+                                  </div>
+                              </div>
+                        </div>
+                        <div class="add-buttons-conatiner" style="display: flex; justify-content: flex-end;">
+                            <button class="btn-add-item" onClick="adicionarCliente('pessoa',{
+            nome: nomePessoa.value,
+            bi: bi.value,
+            estadocivil: estadocivil.value,
+            foto: foto.files[0],
+            aniversario: aniversario.value,
+            endereco: endereco.value,
+            sexo: sexo.value,
+            telefone1: telefone1.value,
+            telefone2: telefone2.value
+         },{
+             nome: nomeUsuario.value,
+             senha: senha.value,
+             emailRecuperacao: emailRecuperacao.value,
+             acesso: 'cliente'
+         })">Adicionar</button>
+                            <button class="btn-clear-item">Limpar</button>
+                        </div>
+                        </div>
+
+                    </div>
+                    </div>
+                </div>
+        `)
+    })
+
+
+    mostrarRefeicao = async (nome, preco , foto, descricao) => {
+        toggleModal(`
+            <div class="modal_container food-show">
+                <div class="modal_container--header"><button onclick="closeAll()"
+                        class="popup_close">&times;</button>
+                </div>
+                <div>
+                    <div>
+                        <img src="${api.filePath()}${foto}" alt="${nome}">
+                    </div>
+                    <div>
+                        <h3>${nome}</h3>
+                        <h1>${preco} Akz</h1>
+                        <p>${descricao}</p>
+                        <div>
+                            <span class="qt-input">
+                                <input placeholder="Quantidade" type="number"/><button>adicionar <i class="fas fa-shopping-cart"></i></button>    
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `)
+    }
+    adicionarCliente = async (table,values,userValue) =>{
+        let pessoa = await api.send({
+            table: table,
+            method: "add",
+            data: values
+        })
+
+        console.log(pessoa)
+
+        let { data, inserted_id, status } = pessoa
+
+        if((data === status) === true){
+            userValue['pessoaId'] = inserted_id
+            let { data } = await api.send({
+                table: 'usuario',
+                method: "add",
+                data: userValue
+            })
+            console.log(data)
+
+            alert(data ? 'cadastrado com sucesso' : 'houve uma falha ao cadastar')
+        }
+    }
+
+    let [ navigation, state ] = [ document.querySelector('.navigation'), true]
+
+
+    side_nav.addEventListener('click',()=>{
+        if(!state){
+            navigation.style.left= '-110%'
+            state = true
+            side_nav.setAttribute('class','fas fa-bars')
+        }else{
+            navigation.style.left= '0'
+            state = false
+            side_nav.setAttribute('class','fas fa-times')
+        }
+    })
+
+    toggleModal = (container) =>{
+
+         /*** Set transparent black background **/
+        POPUP.style.opacity = 1
+        POPUP.style.visibility = 'visible'
+
+        POPUP_CONTENT.innerHTML = container
+
+        /*** Show modal container **/        
+        POPUP_CONTENT.style.opacity = 1
+        POPUP_CONTENT.style.transform = 'translate(-50%, -50%) scale(1)'
+    }
+
+    closeAll = () =>{
+        POPUP_CONTENT.style.opacity = 0
+        POPUP_CONTENT.style.transform = 'translate(-50%, -50%) scale(.25)'
+        POPUP.style.opacity = 0
+        POPUP.style.visibility = 'hidden'
+        isOpen = false;
+    }
+
        var swiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             nextButton: '.swiper-button-next',

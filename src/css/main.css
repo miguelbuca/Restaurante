@@ -1,3 +1,4 @@
+@import './scroll.css';
 :root {
     --color-primary: #c4112f;
     --color-primary-light: #fef1e1;
@@ -66,12 +67,77 @@ body>*:nth-child(2) {
 }
 
 aside {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 30rem;
     height: 100vh;
 }
-
+.navigation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, .7);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    left: -110%;
+    transition: left .5s;
+}
+.navigation>div{
+    display: flex;
+    align-items: center;
+}
+.navigation>div:first-child{
+    flex: 1;
+    justify-content: center;
+}
+.navigation>div:last-child{
+    flex: 2;
+    flex-direction: column;
+}
+.navigation>div:last-child>ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.navigation>div:last-child>ul>li{
+    padding: 1rem 0;
+}
+.navigation>div:last-child>ul>li>a:link,
+.navigation>div:last-child>ul>li>a:visited{
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+.sign-out-button{
+    padding: 1rem 2rem;
+    border-radius: 100px;
+    background-color: #ffff;
+    border: solid 2px var(--color-primary);
+    color: var(--color-primary);
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.sign-out-button i{
+    margin-left: 1rem;
+}
+.navigation-list-footer{
+    margin-top: 1rem;
+}
+.navigation-img-container>img{
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    border: solid 2px var(--color-primary);
+    border-style: dashed;
+    padding: .5rem;
+}
 aside>div:first-child {
     color: #000;
     font-style: italic;
@@ -206,15 +272,10 @@ main>section>div:first-child h1 {
 }
 
 main>section>div:first-child button {
-    border: solid 1px var(--color-primary);
-    background-color: transparent;
-    border-radius: 100px;
-    padding: .8rem 2rem;
-    color: var(--color-primary);
-    font-size: 1rem;
     margin-top: 1.5rem;
     cursor: pointer;
     transition: all .3s;
+    outline: none;
 }
 
 main>section>div:first-child button:hover {
@@ -407,4 +468,94 @@ footer>div:last-child{
     background-color: transparent;
     outline: none;
     color: var(--color-primary);
+}
+.form_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-from {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-from>div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.product-from>div>div {
+    flex: 1;
+}
+
+.product-from>div>div:not(:last-child) {
+    margin-right: 2rem;
+}
+.shopping-cart{
+    position: relative;
+}
+.food-show{
+    position: relative;
+    width: 60vw;
+    display: flex;
+    flex-direction: row;
+}
+.food-show>div:last-child{
+    margin-top: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+.food-show>div:last-child>*{
+    flex: 1;
+}
+.food-show>div:last-child>*:first-child{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.food-show>div:last-child>*:first-child img{
+    width: 90%;
+    height: auto;
+}
+.food-show>div:last-child>*:last-child{
+    display: flex;
+    flex-direction: column;
+}
+.food-show>div:last-child>*:last-child p{
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+}
+.qt-input{
+    border: solid 2px var(--color-primary);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    width: 340px;
+    overflow: hidden;
+    background-color: var(--color-primary);
+    cursor: pointer;
+}
+.qt-input>input{
+    outline: none;
+    padding: 1rem 2rem;
+    border: none;
+    flex: 1;
+}
+.qt-input>button{
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: .7rem;
+    flex: 1;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+.qt-input>button i{
+    margin-left: .3rem;
 }
