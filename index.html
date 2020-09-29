@@ -61,7 +61,9 @@
                     <li><a isTarget="false" href="#Sobre">Sobre</a></li>
                </ul>
                <div>
-                   <i class="fas fa-shopping-cart"></i>
+                   <i style="position: relative;" class="fas fa-shopping-cart">
+                       <span class="n-shopping-cart" id="cartValue"></span>
+                   </i>
                    <i class="fas fa-bars" id="side_nav"></i>
                </div>
            </nav>
@@ -160,6 +162,8 @@
 
         let api = new Api();
 
+        let shoppingCart = {}
+
 
         
 
@@ -172,9 +176,9 @@
         }).then(({ data }) => {
             let result = ``
             data?.map(produto=>{
-                let { nome, preco , foto, descricao } = produto
+                let { id, nome, preco , foto, descricao } = produto
                 result += `
-                        <div class="food-card" onclick="mostrarRefeicao('${nome}','${preco}','${foto}','${descricao}')">
+                        <div class="food-card" onclick="mostrarRefeicao('${id}','${nome}','${preco}','${foto}','${descricao}')">
                         <div>
                             <img src="${api.filePath()}${foto}" alt="${foto}">
                         </div>
@@ -323,8 +327,21 @@
         `)
     })
 
+    updateCart = () => {
+        cartValue.innerText = Object.keys(shoppingCart).length
+        cartValue.style.display = Object.keys(shoppingCart).length ? 'flex' : 'none'
+    }
 
-    mostrarRefeicao = async (nome, preco , foto, descricao) => {
+    function adicionarCarrinho(id,nome, preco , foto, descricao){
+
+        let qtd = shoppingCart[id] ? shoppingCart[id]?.quantidade : 0
+
+        shoppingCart[id] = {data: {id,nome, preco , foto, descricao},quantidade: ++qtd}
+
+        updateCart();
+    }
+
+    mostrarRefeicao = async (id,nome, preco , foto, descricao) => {
         toggleModal(`
             <div class="modal_container food-show">
                 <div class="modal_container--header"><button onclick="closeAll()"
@@ -339,9 +356,10 @@
                         <h1>${preco} Akz</h1>
                         <p>${descricao}</p>
                         <div>
-                            <span class="qt-input">
-                                <input placeholder="Quantidade" type="number"/><button>adicionar <i class="fas fa-shopping-cart"></i></button>    
-                            </span>
+                            <button class="sign-out-button" onclick="adicionarCarrinho(${id},'${nome}',${preco},'${foto}','${descricao}')">
+                                    adicionar
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
                         </div>
                     </div>
                 </div>
