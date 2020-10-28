@@ -254,3 +254,22 @@ button{
   width: 150px;
   height: 150px;
 }
+.sign-out-button {
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  background-color: #ffff;
+  border: solid 2px var(--color-primary);
+  color: var(--color-primary);
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.sign-out-button i {
+  margin-left: 1rem;
+}
+
+.sign-out-button:active {
+  background-color: #c4112f50;
+}

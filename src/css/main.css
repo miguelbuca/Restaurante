@@ -1,4 +1,5 @@
 @import './scroll.css';
+
 :root {
     --color-primary: #c4112f;
     --color-primary-light: #fef1e1;
@@ -73,6 +74,7 @@ aside {
     width: 30rem;
     height: 100vh;
 }
+
 .navigation {
     position: absolute;
     left: 0;
@@ -87,54 +89,45 @@ aside {
     left: -110%;
     transition: left .5s;
 }
-.navigation>div{
+
+.navigation>div {
     display: flex;
     align-items: center;
 }
-.navigation>div:first-child{
+
+.navigation>div:first-child {
     flex: 1;
     justify-content: center;
 }
-.navigation>div:last-child{
+
+.navigation>div:last-child {
     flex: 2;
     flex-direction: column;
 }
-.navigation>div:last-child>ul{
+
+.navigation>div:last-child>ul {
     list-style: none;
     display: flex;
     flex-direction: column;
     text-align: center;
 }
-.navigation>div:last-child>ul>li{
+
+.navigation>div:last-child>ul>li {
     padding: 1rem 0;
 }
+
 .navigation>div:last-child>ul>li>a:link,
-.navigation>div:last-child>ul>li>a:visited{
+.navigation>div:last-child>ul>li>a:visited {
     text-decoration: none;
     color: #000;
     font-weight: bold;
 }
-.sign-out-button{
-    padding: 1rem 2rem;
-    border-radius: 100px;
-    background-color: #ffff;
-    border: solid 2px var(--color-primary);
-    color: var(--color-primary);
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all .2s;
-}
-.sign-out-button i{
-    margin-left: 1rem;
-}
-.sign-out-button:active{
-    background-color: #c4112f50;
-}
-.navigation-list-footer{
+
+.navigation-list-footer {
     margin-top: 1rem;
 }
-.navigation-img-container>img{
+
+.navigation-img-container>img {
     height: 120px;
     width: 120px;
     border-radius: 50%;
@@ -142,6 +135,7 @@ aside {
     border-style: dashed;
     padding: .5rem;
 }
+
 aside>div:first-child {
     color: #000;
     font-style: italic;
@@ -408,53 +402,63 @@ footer {
     flex-direction: column;
 }
 
-footer>div:first-child{
+footer>div:first-child {
     flex: 1;
     padding: 2.5rem;
     display: flex;
     flex-direction: row;
 }
-footer>div:first-child>div{
+
+footer>div:first-child>div {
     flex: 1;
 }
-footer>div:last-child{
+
+footer>div:last-child {
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--color-primary);
     padding: 1rem;
 }
-.clock-area{
+
+.clock-area {
     display: flex;
     flex-direction: row;
     margin-top: 1rem;
 }
-.clock-area>div:first-child{
+
+.clock-area>div:first-child {
     color: #ccc;
 }
-.clock-area>div:last-child{
+
+.clock-area>div:last-child {
     margin-left: 1rem;
     display: flex;
     flex-direction: column;
     padding: 0 1rem;
     border-left: var(--line);
 }
-.clock-area>div:last-child>span{
+
+.clock-area>div:last-child>span {
     display: flex;
     flex-direction: column;
 }
-.clock-area>div:last-child>span>strong{
+
+.clock-area>div:last-child>span>strong {
     color: #ccc;
 }
-.clock-area>div:last-child>span:not(:last-child){
+
+.clock-area>div:last-child>span:not(:last-child) {
     margin-bottom: 1rem;
 }
-.about{
+
+.about {
     position: relative;
     width: 70%;
     top: 2rem;
 }
-.about::before{
+
+.about::before {
     content: "\201c";
     position: absolute;
     top: -2.75rem;
@@ -465,7 +469,8 @@ footer>div:last-child{
     font-family: sans-serif;
     z-index: -1;
 }
-.btn-send{
+
+.btn-send {
     padding: .5rem 0;
     border: solid 1px var(--color-primary);
     border-radius: 4px;
@@ -473,6 +478,7 @@ footer>div:last-child{
     outline: none;
     color: var(--color-primary);
 }
+
 .form_container {
     display: flex;
     flex-direction: column;
@@ -496,43 +502,52 @@ footer>div:last-child{
 .product-from>div>div:not(:last-child) {
     margin-right: 2rem;
 }
-.shopping-cart{
+
+.shopping-cart {
     position: relative;
 }
-.food-show{
+
+.food-show {
     position: relative;
     width: 60vw;
     display: flex;
     flex-direction: row;
 }
-.food-show>div:last-child{
+
+.food-show>div:last-child {
     margin-top: 1rem;
     flex: 1;
     display: flex;
     flex-direction: row;
 }
-.food-show>div:last-child>*{
+
+.food-show>div:last-child>* {
     flex: 1;
 }
-.food-show>div:last-child>*:first-child{
+
+.food-show>div:last-child>*:first-child {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.food-show>div:last-child>*:first-child img{
+
+.food-show>div:last-child>*:first-child img {
     width: 90%;
     height: auto;
 }
-.food-show>div:last-child>*:last-child{
+
+.food-show>div:last-child>*:last-child {
     display: flex;
     flex-direction: column;
 }
-.food-show>div:last-child>*:last-child p{
+
+.food-show>div:last-child>*:last-child p {
     margin-top: 2rem;
     margin-left: 2rem;
     margin-bottom: 2rem;
 }
-.qt-input{
+
+.qt-input {
     border: solid 2px var(--color-primary);
     border-radius: 100px;
     display: flex;
@@ -542,13 +557,15 @@ footer>div:last-child{
     background-color: var(--color-primary);
     cursor: pointer;
 }
-.qt-input>input{
+
+.qt-input>input {
     outline: none;
     padding: 1rem 2rem;
     border: none;
     flex: 1;
 }
-.qt-input>button{
+
+.qt-input>button {
     background-color: var(--color-primary);
     color: #fff;
     font-weight: bold;
@@ -560,10 +577,12 @@ footer>div:last-child{
     flex-direction: row;
     cursor: pointer;
 }
-.qt-input>button i{
+
+.qt-input>button i {
     margin-left: .3rem;
 }
-.n-shopping-cart{
+
+.n-shopping-cart {
     background-color: var(--color-primary);
     padding: .2rem;
     min-width: .5rem;
@@ -578,4 +597,187 @@ footer>div:last-child{
     top: .35rem;
     border: solid 2px #fff;
     color: #fff;
+}
+
+.shopping-cart-show {
+    position: relative;
+    width: 60vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.shopping-cart-show>div:last-child {
+    margin-top: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.shopping-cart-show>div:last-child>* {
+    flex: 1;
+}
+
+.shopping-cart-show>div:last-child>*:first-child {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+    border-right: var(--line);
+}
+
+.shopping-cart-show>div:last-child>*:first-child img {
+    width: 90%;
+    height: auto;
+}
+
+.shopping-cart-show>div:last-child>*:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.shopping-cart-show>div:last-child>*:last-child p {
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+}
+
+.reserva-list{
+    position: absolute;
+    list-style: none;
+    height: 100%;
+    width: 95%;
+    overflow-y: auto;
+}
+.reserva-list>li:not(:last-child){
+    margin-bottom: 1rem;
+}
+.reserva-list>li:nth-child(2n){
+    background-color: rgba(0, 0, 0, .01);
+}
+.reserva-list>li>div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: .5rem;
+    border-radius: 8px;
+}
+.reserva-list>li>div>*:nth-child(2){
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.reserva-list>li>div>*:nth-child(2)>span:first-child{
+    font-weight: bold;
+    font-size: 1rem;
+}
+.reserva-list>li>div>*:first-child img{
+    width: 7rem !important;
+    height: auto;
+    margin-right: 1rem;
+}
+.reserva-list>li>div i{
+    margin-left: .5rem;
+    padding-left: .5rem;
+    color: var(--color-primary);
+    border-left: var(--line);
+}
+.cardapio>div:first-child button[active="true"]{
+    color: #fff;
+    background-color: var(--color-primary);
+}
+header .logo-box{
+    display: none;
+}
+@media screen and (max-width: 500px) {
+    .cardapio>div:last-child{
+        justify-content: center;
+    }
+    .food-card:not(:last-child){
+        margin-right: 0;
+    }
+}
+@media screen and (max-width: 1100px) {
+    /* One or more CSS rules to apply when the query is satisfied */
+    aside{
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    .cardapio>div:first-child{
+        justify-content: center;
+    }
+    .cardapio>div:first-child button{
+        margin-bottom: 1rem;
+    }
+    .navigation{
+        background-color: #fff;
+    }
+    .navigation>div:last-child>ul{
+        margin-top: 8rem;
+    }
+    main>section>div:first-child .sign-out-button {
+        background-color: transparent !important;
+        border: solid 2px #fff !important;
+        color: #fff !important;
+    }
+    main>section>div:first-child{
+        display: none;
+        align-items: center;
+    }
+    aside>div:nth-child(2){
+        margin-bottom: 2rem;
+    }
+    header .logo-box {
+        display: flex;
+        flex-grow: 1;
+        padding: 0;
+    }
+    header{
+        background-color: #fff;
+        z-index: 10;
+    }
+    header>nav>ul{
+        position: absolute;
+        z-index: 2;
+        border-bottom: var(--line);
+        top: 15rem;
+        left: 50%;
+        margin: 0;
+        padding: 1rem 0;
+        left: -110%;
+        transform: translate(-50%,0);
+        flex-direction: column;
+        width: 80%;
+        transition: left .55s;
+    }
+    main>section>div:first-child h1{
+        color: #fff;
+    }
+    main>section>*:nth-child(2){
+        margin-top: 95vh;
+    }
+    main>section>*:not(:first-child){
+        background-color: #fff !important;
+    }
+    body>*:nth-child(2){
+        margin-left: 0;
+    }
+    footer{
+        background-color: #fff !important;
+        margin: 0;
+        bottom: 0;
+        padding-top: 2.5rem;
+    }
+    footer>div:first-child{
+        flex-direction: column;
+    }
+    footer>div:first-child>div{
+        margin-bottom: 5rem;
+    }
+    .localizacao{
+        flex-direction: column;
+    }
+    .food-show>div:last-child{
+        flex-direction: column;
+    }
 }

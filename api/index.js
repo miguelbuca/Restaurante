@@ -1,4 +1,4 @@
-const url = window.location.toString()?.split('src')[0]+"api/db";
+const url = window.location.toString()?.split('#')[0]?.split('src')[0]+"api/db";
 
 class Api{
     send = async (data_ = {
@@ -44,6 +44,7 @@ class Api{
            formData.append(key, data[key]);
          }  
     }
+
     let result = await fetch(url + `/${table}/${method}`, {
       method: 'POST',
       body: formData

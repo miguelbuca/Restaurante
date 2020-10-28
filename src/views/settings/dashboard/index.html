@@ -29,7 +29,8 @@
         <button src="./tables.html">Tabelas</button>
       </div>
       <div>
-        <span>
+        <span id="showNotification">
+          <span class="not-number"></span>
           <i class="fas fa-bell"></i>
         </span>
       </div>
@@ -37,8 +38,113 @@
     <main>
       <iframe src="./chart.html" frameborder="0"></iframe>
     </main>
+    <div class="popup"></div>
+    <div class="popup_content"></div>
 </body>
+<script src="../../../../api/index.js"></script>
 <script>
+
+  let api = new Api()
+
+  var POPUP = document.querySelector('.popup');
+  var POPUP_CONTENT = document.querySelector('.popup_content');
+
+  let isOpen = false;
+
+  
+    toggleModal = (container) =>{
+
+         /*** Set transparent black background **/
+        POPUP.style.opacity = 1
+        POPUP.style.visibility = 'visible'
+
+        POPUP_CONTENT.innerHTML = container
+
+        /*** Show modal container **/        
+        POPUP_CONTENT.style.opacity = 1
+        POPUP_CONTENT.style.transform = 'translate(-50%, -50%) scale(1)'
+    }
+
+    closeAll = () =>{
+        POPUP_CONTENT.style.opacity = 0
+        POPUP_CONTENT.style.transform = 'translate(-50%, -50%) scale(.25)'
+        POPUP.style.opacity = 0
+        POPUP.style.visibility = 'hidden'
+        isOpen = false;
+    }
+
+  let list = ``
+
+  api.send({
+    table: "reserva",
+    method: "all",
+    data: {
+      allPage: true,
+      leftJoin: true,
+      moreTable:'usuario.id reserva.usuarioId,pessoa.id usuario.pessoaId'
+    }
+  })
+  .then(({ data })=>{
+    document.querySelector('.not-number').innerHTML = data.filter(({ estado })=> estado !== "1").length
+
+
+    data.map(({ USUARIO_nome, anexo,dataReserva, PESSOA_foto, total})=>{
+      
+      var dataDeReserva = new Date(dataReserva).toLocaleDateString('pt-PT', {
+        day : 'numeric',
+        month : 'long',
+        year : 'numeric'
+      });
+
+      list += `
+          <li>
+              <div>
+                <div>
+                  <img src="${ PESSOA_foto !== "undefined" ? api.filePath()+PESSOA_foto : "../../../../assets/img/avatar.png"  }" />
+                  <span>
+                      <strong>${USUARIO_nome}</strong>
+                      <p>${dataDeReserva}</p>
+                      <a href="${api.filePath()}${anexo}" target="_blank">Ver comprovativo <i
+                          class="fas fa-link"></i></a>
+                  </span>
+                </div>
+                <div>
+                  <button class="sign-out-button">
+                    Aceitar
+                  </button>
+                  <button class="sign-out-button">
+                    Eliminar
+                  </button>
+                </div>
+              </div> 
+              <div>
+                  ${total} Akz
+              </div>
+          <li>
+      `
+
+      return
+    })
+  })
+
+  showNotification.addEventListener('click',()=>{
+    toggleModal(`
+    <div class="modal_container showNotification shopping-cart-show">
+      <div class="modal_container--header"><button onclick="closeAll()" class="popup_close">&times;</button>
+      </div>
+      <div>
+        <div>
+          <h3 style="color: #ccc;">Reservas</h3>
+        </div>
+        <div>
+          <ul>
+            ${list}
+          </ul>
+        </div>
+      </div>
+    </div>
+    `)
+  })
   let navItem = document.querySelectorAll('header>div:nth-child(2)>button')
   let iframe = document.querySelector('iframe')
 

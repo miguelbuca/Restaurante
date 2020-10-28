@@ -25,6 +25,9 @@ class CrudTable {
     this.columns.map((value) => {
       header += `<th>${value}</th>`
     })
+
+    console.log('here->',header)
+
     return header
   }
   getTableStruct(){
