@@ -1,6 +1,7 @@
 <?php
 
     include_once 'auxiliary.php';
+    include_once 'emailService.php';
 
     class Application extends Aux{
 
@@ -56,6 +57,45 @@
             ];
 
             $this->echoResult(true,"Login feito com sucesso!",$dataArray,[],[]);
+        }
+
+        
+        public function sendEmail($_DATA){
+            
+            $empty = [];
+            $missed = [];
+            $invalid = [];
+            $status = true;
+
+            foreach(["from","fromName","to","toName","subject","body"] as $key){
+                if(array_key_exists($key,$_DATA)){
+                 
+                    if(empty($_DATA[$key])){
+                    array_push($empty, $key);
+                    $status = false;
+                  }elseif ($key === "from" || $key === "to"){
+                     
+                    if (!filter_var($_DATA[$key], FILTER_VALIDATE_EMAIL)) {
+                        array_push($invalid, ["campo"=>$key,"value"=>$_DATA[$key]]);
+                        $status = false;
+                    }
+                 }
+                }else{
+                    $info = "missed field '$key' ,";
+                    array_push($missed, $key);
+                    $status = false;
+                }
+            }
+
+            $res = ["status"=>$status,"empty"=> $empty, "missed"=>$missed,  "invalid"=>$invalid ];
+            if(!$status){
+                echo json_encode($res);
+                return;
+            }
+
+            $email = new Email();
+            $res = $email->send($_DATA);
+            echo json_encode($res);
         }
 
         public function logout(){

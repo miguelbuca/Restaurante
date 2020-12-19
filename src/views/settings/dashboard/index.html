@@ -147,10 +147,9 @@
   })
   let navItem = document.querySelectorAll('header>div:nth-child(2)>button')
   let iframe = document.querySelector('iframe')
-
        
        clearTarget = () =>navItem.forEach(element=>element.setAttribute('active',false)) // desativa a isTargt dos links
-       
+
        navItem.forEach(e=>
             e.addEventListener('click',()=>{
                 clearTarget()

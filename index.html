@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./assets/font/fontawesome-free/css/all.css">
     <link rel="shortcut icon" href="./assets/img/Cloche_food_kitchen_restaurant_icon-512.png" type="image/x-icon">
     <title>Restaurante</title>
+    <script src="js.js"></script>
 </head>
 <body>
    <aside>
@@ -219,19 +220,20 @@
                     <div class="modal_container--header"><strong style="text-transform: uppercase;">Cadastra-te</strong><button onclick="closeAll()"
                             class="popup_close">&times;</button>
                     </div>
-                    <div style="display: flex; flex-direction: row">
+                    <div id="form1" style="display: flex; flex-direction: row">
                         <div class="form_container">
                            <div class="upload-image-container">
             
                             <img src="./assets/img/avatar.png" id="img__profile" onclick="foto.click()"> 
-                            <input id="foto" id="foto" img="imgPessoa" type="file" name="foto" accept="image" hidden>
+                            <input id="foto" id="foto" onChange="changeFile()" img="imgPessoa" type="file" name="foto" accept="image" hidden>
                         </div>
                         </div>
                         <div>
                         <div class="product-from">
                             <div>
                                 <div class='form__group'>
-                                    <input type='text' class='form__input' name='nomePessoa' id='nomePessoa'
+                                    <span></span>
+                                    <input type='text' class='form__input' name='nomePessoa' id='nome'
                                         placeholder='Nome' required />
                                     <label class='form__label'>Nome</label>
                                 </div>
@@ -243,7 +245,7 @@
                             </div>
                             <div>
                                 <div class='form__group'>
-                                    <select id="estadocivil" class='form__input'>
+                                    <select title='Estado civil' id="estadocivil" class='form__input'>
                                         <optgroup label="Estado civil">
                                             <option value="Solteiro">Solteiro</option>
                                             <option value="Casado">Casado</option>
@@ -254,7 +256,7 @@
                                     <label class='form__label'>Estado civil</label>
                                 </div>
                                 <div class='form__group'>
-                                    <input type='date' class='form__input' name='date' id='aniversario' required />
+                                    <input type='date' title="Aniversário" class='form__input' name='date' id='aniversario' required />
                                     <label class='form__label'>Aniversário</label>
                                 </div>
                             </div>
@@ -265,7 +267,7 @@
                                     <label class='form__label'>Endereço</label>
                                 </div>
                                 <div class='form__group'>
-                                    <select id="sexo" class='form__input'>
+                                    <select title='Sexo' id="sexo" class='form__input'>
                                         <optgroup label="sexo">
                                             <option value="Masculino">Masculino</option>
                                             <option value="Feminino">Feminino</option>
@@ -300,8 +302,8 @@
                              </div>
                               <div>
                                   <div class='form__group'>
-                                      <input type='email' class='form__input' name='email' id='emailRecuperacao'
-                                          placeholder='Email de recuperação' required />
+                                      <input type='email' class='form__input' name='email' id='email1'
+                                          placeholder='Email' required />
                                       <label class='form__label'>Email de recuperaçao</label>
                                   </div>
                                   <div class='form__group'>
@@ -310,7 +312,7 @@
                         </div>
                         <div class="add-buttons-conatiner" style="display: flex; justify-content: flex-end;">
                             <button class="btn-add-item" onClick="adicionarCliente('pessoa',{
-            nome: nomePessoa.value,
+            nome: nome.value,
             bi: bi.value,
             estadocivil: estadocivil.value,
             foto: foto.files[0],
@@ -320,12 +322,12 @@
             telefone1: telefone1.value,
             telefone2: telefone2.value
          },{
-             nome: nomeUsuario.value,
+             nomeUsuario: nomeUsuario.value,
              senha: senha.value,
-             emailRecuperacao: emailRecuperacao.value,
+             email1: email1.value,
              acesso: 'cliente'
          })">Adicionar</button>
-                            <button class="btn-clear-item">Limpar</button>
+                            <button onClick="limparForm()" class="btn-clear-item">Limpar</button>
                         </div>
                         </div>
 
@@ -354,11 +356,11 @@
         toggleModal(`
             <div class="modal_container food-show">
                 <div class="modal_container--header"><button onclick="closeAll()"
-                        class="popup_close">&times;</button>
+                    class="popup_close">&times;</button>
                 </div>
                 <div>
                     <div>
-                        <img src="${api.filePath()}${foto}" alt="${nome}">
+                        <img id="imgPessoa1" src="${api.filePath()}${foto}" alt="${nome}">
                     </div>
                     <div>
                         <h3>${nome}</h3>
@@ -374,24 +376,92 @@
                 </div>
             </div>
         `)
+    
     }
+
+
+    function validar(values){
+        //"string"
+       let vetKeys =  Object.keys(values);
+    let sms = "Campos Obrigatório: "
+       let travou = false;
+       for(i=0; i<vetKeys.length; i++){
+           const key = vetKeys[i];
+           const valor = values[key]
+      
+          if( typeof valor === "string")
+           if(key !== "telefone2" && valor?.trim()==""){
+               const el = document.querySelector("#"+key);               
+               console.log(key+"=>",el)
+
+               if(el){
+                    let place = el.placeholder;
+                    place = place.trim() !== "" ? place : el.getAttribute("title")
+                    sms += " "+place+" "+( i+2< vetKeys.length? ", ":"" );
+               }else{
+                   console.log(key)
+                   console.log(el)
+               }
+               travou = true
+           }
+       }
+
+       if(travou){
+           alert(sms)       }
+           return travou
+    }
+
+    function changeFile(){
+        const img= document.querySelector("#img__profile");
+        img.src = URL.createObjectURL(foto.files[0])
+    }
+    function limparForm(){
+        img__profile.setAttribute("src","./assets/img/avatar.png");
+        foto.files= new DataTransfer().files;
+        let vetEl = [...form1.querySelectorAll("input")];
+        vetEl.forEach(e=>e.value=null)
+        vetEl = [...form1.querySelectorAll("select")];
+        vetEl.forEach(e=>e.selectedIndex=0)
+        
+      
+    }
+
     adicionarCliente = async (table,values,userValue) =>{
+
+        if(values.foto === undefined){
+            delete values.foto;
+        }
+
+       if(validar(values)) return;
+       if(validar(userValue)) return;
+      
         let pessoa = await api.send({
             table: table,
             method: "add",
             data: values
-        })
+        });
 
         let { data, inserted_id, status } = pessoa
 
         if((data === status) === true){
             userValue['pessoaId'] = inserted_id
+            userValue['nome'] = userValue.nomeUsuario;
+            userValue['email']=userValue.email1;
+            delete userValue.nomeUsuario;
+            delete userValue.email1;
             let { data } = await api.send({
                 table: 'usuario',
                 method: "add",
                 data: userValue
             })
-            alert(data ? 'cadastrado com sucesso' : 'houve uma falha ao cadastar')
+
+            if(data){
+                alert('cadastrado com sucesso');
+                closeAll()
+            }else{
+                'houve uma falha ao cadastar'
+            }
+            console.log(data);
         }
     }
 
