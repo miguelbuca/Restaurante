@@ -21,6 +21,11 @@
     --line: 1px solid var(--color-grey-light-2);
 }
 
+.lblInfo{
+    color: red;
+    font: 11px;;
+}
+
 * {
     margin: 0;
     padding: 0;
