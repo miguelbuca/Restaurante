@@ -156,12 +156,12 @@
    <script src="./src/components/swiper/swiper.min.js"></script>
    <script src="./api/index.js"></script>
    <script>
+       let api = new Api()
+       if(JSON.parse(sessionStorage.getItem('user'))){
         let { nome, foto } = JSON.parse(sessionStorage.getItem('user'))
 
-        let api = new Api()
-
         userimg.src = api.filePath()+foto
-
+       }
         let shoppingCart = {}
 
         function getRandomInt(min, max) {
