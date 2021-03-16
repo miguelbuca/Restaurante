@@ -1,7 +1,6 @@
 const url =
   window.location.toString()?.split("#")[0]?.split("src")[0] + "api/db";
 
-<<<<<<< HEAD
 class Api{
     login = async (data_ = {table:"", method:"", data: {
       subQuery: '',
@@ -64,55 +63,7 @@ class Api{
       search:'',
       username:'',
       password:''
-    }})=>{
-      let { table, method, data }= data_;
-      
-      
-
-       let formData = new FormData();
-       if(data)
-       for (let key in data) {
-
-         if (typeof data[key] == 'object' && data[key]) {
-
-           if (data[key].length) {
-
-             let i = 0;
-             for (let item of data[key]) {
-               formData.append(key + "," + i, item);
-               i++;
-             }
-
-           } else {
-             formData.append(key, data[key]);
-           }
-         } else {
-           formData.append(key, data[key]);
-         }  
-=======
-class Api {
-  send = async (
-    data_ = {
-      table: "",
-      method: "",
-      data: {
-        subQuery: "",
-        isJoin: false,
-        graph: false,
-        query: "",
-        fieldSearch: "",
-        id: 0,
-        field: "",
-        leftJoin: false,
-        moreTable: "",
-        allPage: false,
-        search: "",
-        username: "",
-        password: "",
-      },
->>>>>>> cb3cbf899fd397d8476521f4d18e2da9b349c02f
-    }
-  ) => {
+    }}) => {
     let { table, method, data } = data_;
 
     let formData = new FormData();
