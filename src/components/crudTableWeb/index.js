@@ -96,17 +96,7 @@ class CrudTable {
   }
   Table(){
         return(`
-                <table cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            ${this.TableHeader()}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${ this.TableBody() }
-                    </tbody>
-                </table>
+               ola
       `)
     }
   render() {

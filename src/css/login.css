@@ -46,9 +46,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(../../assets/img/FAVPNG_whopper-chicken-sandwich-crispy-fried-chicken-hamburger-onion-ring_fpmMgHst.png),
-  linear-gradient(to right bottom, var(--color-primary), #ba265d);
-  background-size: contain;
+  background-image:
+  linear-gradient(to right bottom, var(--color-primary), #ba265c8f), url(../../assets/img/bg_login.jpg);
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }

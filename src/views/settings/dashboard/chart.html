@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="../../../../assets/font/fontawesome-free/css/all.css">
   <link rel="shortcut icon" href="../../../../assets/img/Cloche_food_kitchen_restaurant_icon-512.png"
     type="image/x-icon">
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <title>Restaurante | Dashboard</title>
 </head>
 
@@ -53,7 +55,12 @@
     </div>
   </section>
   <section>
-    2
+    <div class="chart-container">
+      <div class="chart1"></div>
+      <div class="chart2"></div>
+      <!--<div class="chart3"></div>
+      <div class="chart4"></div>-->
+    </div>
   </section>
 </body>
 <script src="../../../../api/index.js"></script>
@@ -99,5 +106,70 @@
   }).then(({ data })=>{
     usuarios.innerText = data.length
   });
+
+  var options = {
+  chart: {
+    type: 'line'
+  },
+  series: [{
+    name: 'sales',
+    data: [30,40,35,50,49,60,70,91,125]
+  }],
+  xaxis: {
+    categories: [1991,1992,1993,1994,1995,1996,1997, 1998,2021]
+  }
+}
+
+new ApexCharts(document.querySelector(".chart1"), {
+          series: [{
+          name: 'series1',
+          data: [31, 40, 28, 51, 42, 109, 100]
+        }, {
+          name: 'series2',
+          data: [11, 32, 45, 32, 34, 52, 41]
+        }],
+          chart: {
+          height: 350,
+          type: 'area'
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth'
+        },
+        xaxis: {
+          type: 'datetime',
+          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+        },
+        tooltip: {
+          x: {
+            format: 'dd/MM/yy HH:mm'
+          },
+        },
+        }).render();
+
+new ApexCharts(document.querySelector(".chart2"), {
+          series: [44, 55, 41, 17, 15],
+          chart: {
+          type: 'donut',
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        }).render();
+
+new ApexCharts(document.querySelector(".chart3"), options).render();
+
+new ApexCharts(document.querySelector(".chart4"), options).render();
+
 </script>
 </html>

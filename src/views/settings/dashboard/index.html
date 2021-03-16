@@ -17,11 +17,11 @@
     <header>
       <div class="user-info-area">
         <div>
-          <img src="../../../../assets/img/avatar.png" alt="">
+          <img id="userfoto" alt="user-file">
         </div>
         <div>
-          <strong>username</strong>
-          <small>administador</small>
+          <strong id="username"></strong>
+          <small id="useracesso"></small>
         </div>
       </div>
       <div>
@@ -44,7 +44,13 @@
 <script src="../../../../api/index.js"></script>
 <script>
 
+  let { nome, foto, acesso } = JSON.parse(sessionStorage.getItem('user'))
+
   let api = new Api()
+
+  userfoto.src = api.filePath()+foto
+  username.innerText = nome
+  useracesso.innerText = acesso
 
   var POPUP = document.querySelector('.popup');
   var POPUP_CONTENT = document.querySelector('.popup_content');

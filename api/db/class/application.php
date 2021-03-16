@@ -18,7 +18,7 @@
             
             mysqli_close($cn);
             
-            $res     =  $db->query("select *from usuario where username = '$userName' ");
+            $res     =  $db->query("select *from usuario where nome = '$userName' ");
             $linhas  =  $res['data']->num_rows;
 
             if($linhas == 0){
@@ -35,7 +35,7 @@
                 exit;
             }
             
-            $_REQUEST['where' ]  = "pessoa.id=".$dataArray['id_pessoa'];
+            $_REQUEST['where' ]  = "pessoa.id=".$dataArray['pessoaId'];
             $_REQUEST['class' ]  = "pessoa";
             $_REQUEST['isJoin']  = "true";
             $_REQUEST['return']  = "true";

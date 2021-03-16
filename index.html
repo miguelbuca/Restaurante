@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./src/components/swiper/swiper.min.css">
     <link rel="stylesheet" href="./assets/font/fontawesome-free/css/all.css">
     <link rel="shortcut icon" href="./assets/img/Cloche_food_kitchen_restaurant_icon-512.png" type="image/x-icon">
-    <title>Restaurante</title>
+   <title>Restaurante</title>
 </head>
 <body>
    <aside>
@@ -21,21 +21,14 @@
        <div>
            <!-- Swiper -->
            <div class="swiper-container">
-               <div class="swiper-wrapper">
-                   <div class="swiper-slide" product="Hamburger Onion Ring">
-                       <img src="./assets/img/FAVPNG_whopper-chicken-sandwich-crispy-fried-chicken-hamburger-onion-ring_fpmMgHst.png" alt="">
-                   </div>
-                   <div class="swiper-slide" product="Hamburger Onion Ring">
-                       <img src="./assets/img/FAVPNG_whopper-chicken-sandwich-crispy-fried-chicken-hamburger-onion-ring_fpmMgHst.png" alt="">
-                   </div>
-               </div>
+               <div class="swiper-wrapper"></div>
                <!-- Add Pagination -->
                <div class="swiper-pagination"></div>
            </div>
        </div>
        <div class="navigation">
            <div class="navigation-img-container">
-               <img src="./assets/img/avatar.png" alt="user-img">
+               <img id="userimg" src="./assets/img/avatar.png" alt="user-img">
            </div>
            <div>
                <ul>
@@ -163,11 +156,27 @@
    <script src="./src/components/swiper/swiper.min.js"></script>
    <script src="./api/index.js"></script>
    <script>
+        let { nome, foto } = JSON.parse(sessionStorage.getItem('user'))
 
-        let api = new Api();
+        let api = new Api()
+
+        userimg.src = api.filePath()+foto
 
         let shoppingCart = {}
 
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+
+        let out = document.querySelector('.sign-out-button')
+
+        out.addEventListener('click',()=>{
+            sessionStorage.removeItem('user')
+            window.location.reload()
+        })
 
     loadFood = (categoriaName) =>{
         api.send({
@@ -200,6 +209,41 @@
                     </div>
                 `
             })
+
+            let num = getRandomInt(3,data.length);
+
+            let foods = data?.filter((item,index)=>{
+                if(num>=3){
+                    if(index === num-1 || num-2 === index || num-3 === index)
+                        return true
+                }else return false
+            })
+
+            console.log(foods)
+
+            let container_slide = document.querySelector('.swiper-wrapper');
+
+            container_slide.innerHTML = ""
+            foods?.map(({ nome, foto })=>{
+                console.log(nome)
+
+                container_slide.innerHTML += `
+                <div class="swiper-slide" product="${nome}">
+                    <img src="${api.filePath()}${foto}" alt="${nome}">
+                   </div>
+                `
+            })
+
+            var swiper = new Swiper('.swiper-container', {
+                    pagination: '.swiper-pagination',
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    paginationClickable: true,
+                    spaceBetween: 30,
+                    centeredSlides: true,
+                    autoplay: 2500,
+                    autoplayDisableOnInteraction: false
+            }); // inicialização do componente swiper
 
             CardapioList.innerHTML = result
         })
@@ -364,6 +408,12 @@
                         <h3>${nome}</h3>
                         <h1>${preco} Akz</h1>
                         <p>${descricao}</p>
+                        <span>
+                            <div class='form__group'>
+                                <input type='qtd' class='form__input' name='qtd' id='qtd' placeholder='1' required />
+                                <label class='form__label'>Quantidade</label>
+                            </div>
+                        </span>
                         <div>
                             <button class="sign-out-button" onclick="adicionarCarrinho(${id},'${nome}',${preco},'${foto}','${descricao}')">
                                     adicionar
@@ -553,16 +603,6 @@
         isOpen = false;
     }
 
-       var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            paginationClickable: true,
-            spaceBetween: 30,
-            centeredSlides: true,
-            autoplay: 2500,
-            autoplayDisableOnInteraction: false
-       }); // inicialização do componente swiper
 
        let navItem = document.querySelectorAll('header>nav>ul>li>a')
 
@@ -599,7 +639,7 @@
             navItem[2]?.setAttribute('isTarget',true)) :
         window.location.hash === '#Sobre' ? (
             navItem[3]?.setAttribute('isTarget',true)) : 
-        (navItem[0]?.setAttribute('isTarget',true)) //Faz a activação do currente target logo de início
+        (navItem[0]?.setAttribute('isTarget',true)) //Faz a activação do currente target logo de início´
 
     </script>
 </body>
